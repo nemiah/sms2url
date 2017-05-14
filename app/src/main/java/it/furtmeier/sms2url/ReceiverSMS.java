@@ -20,8 +20,8 @@ public class ReceiverSMS extends BroadcastReceiver {
                 String messageBody = smsMessage.getMessageBody();
                 Log.d("SMS", messageBody);
 
-                MainActivity.TV.append("Message from: "+smsMessage.getDisplayOriginatingAddress()+"\n");
-                MainActivity.TV.append("Message body: "+messageBody+"\n");
+                ActivityMain.TV.append("Message from: "+smsMessage.getDisplayOriginatingAddress()+"\n");
+                ActivityMain.TV.append("Message body: "+messageBody+"\n");
 
                 String[] data = new String[3];
                 data[0] = "015156513730";

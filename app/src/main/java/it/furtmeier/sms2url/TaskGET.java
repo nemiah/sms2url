@@ -17,7 +17,7 @@ public class TaskGET extends AsyncTask<String, Void, Void> {
     protected Void doInBackground(String... data) {
         HttpURLConnection urlConnection = null;
         try {
-            //MainActivity.TV.append("Testing...\n");
+            //ActivityMain.TV.append("Testing...\n");
 
             URL url = new URL("https://vishnu.furtmeier.it/ubiquitous/Mobile/receiveSMS.php?device="+URLEncoder.encode(data[0], "utf-8")+"&phone="+URLEncoder.encode(data[1], "utf-8")+"&text="+URLEncoder.encode(data[2], "utf-8"));
 

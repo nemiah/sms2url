@@ -1,5 +1,6 @@
 package it.furtmeier.sms2url;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,7 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class ActivityMain extends AppCompatActivity {
 
     public static TextView TV;
 
@@ -39,9 +40,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.refreshPage:
-                //myWebView.clearCache(true);
-                //myWebView.loadUrl(URL);
+            case R.id.settings:
+                startActivity(new Intent(this, ActivitySettings.class));
 
                 return true;
 
