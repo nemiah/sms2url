@@ -1,6 +1,8 @@
 package it.furtmeier.sms2url;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,13 +19,16 @@ public class ActivityMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Log.d("SMS", "HI, I'm here!");
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //Log.d("SMS", "HI, I'm here!");
         TV = (TextView)findViewById(R.id.textView);
         TV.append("Starting...\n");
+        TV.append("Phone number: "+sharedPrefs.getString("phone", "NULL")+"\n");
+        TV.append("Target URL:\n"+sharedPrefs.getString("url", "NULL")+"?device="+sharedPrefs.getString("phone", "NULL")+"&phone=remoteNumber&text=SMScontent\n");
+
 
         String[] data = new String[3];
-        data[0] = "015156513730";
+        data[0] = sharedPrefs.getString("phone", "NULL");
         data[1] = "sms2url";
         data[2] = "Application started";
 

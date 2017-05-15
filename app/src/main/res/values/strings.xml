@@ -1,14 +1,11 @@
 <resources>
     <string name="app_name">sms2url</string>
-    <string name="title_activity_settings">Settings</string>
-
-
-    <string name="pref_url">URL</string>
-
 
     <string name="settings">Settings</string>
+
+    <string name="pref_url">URL</string>
     <string name="pref_url_value">http://www.example.com/receiveSMS.php</string>
-    <string name="pref_phone">Phone</string>
+    <string name="pref_phone">Phone number</string>
     <string name="pref_phone_value">01234123456</string>
-    <string name="pref_header_general">General</string>
+
 </resources>
