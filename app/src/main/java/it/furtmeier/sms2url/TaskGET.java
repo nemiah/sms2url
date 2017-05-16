@@ -17,15 +17,14 @@ public class TaskGET extends AsyncTask<String, Void, Void> {
     protected Void doInBackground(String... data) {
         HttpURLConnection urlConnection = null;
         try {
-            //ActivityMain.TV.append("Testing...\n");
 
-            URL url = new URL("https://vishnu.furtmeier.it/ubiquitous/Mobile/receiveSMS.php?device="+URLEncoder.encode(data[0], "utf-8")+"&phone="+URLEncoder.encode(data[1], "utf-8")+"&text="+URLEncoder.encode(data[2], "utf-8"));
+            URL url = new URL(data[0]+"?device="+URLEncoder.encode(data[1], "utf-8")+"&phone="+URLEncoder.encode(data[2], "utf-8")+"&text="+URLEncoder.encode(data[3], "utf-8"));
 
             urlConnection = (HttpURLConnection) url.openConnection();
 
-            InputStream in = urlConnection.getInputStream();
+            urlConnection.getInputStream();
 
-            InputStreamReader isw = new InputStreamReader(in);
+            //InputStreamReader isw = new InputStreamReader(in);
 
             /*int data = isw.read();
             while (data != -1) {

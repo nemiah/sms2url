@@ -3,6 +3,8 @@ package it.furtmeier.sms2url;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.provider.Telephony;
 import android.telephony.SmsMessage;
 import android.util.Log;
@@ -20,13 +22,18 @@ public class ReceiverSMS extends BroadcastReceiver {
                 String messageBody = smsMessage.getMessageBody();
                 Log.d("SMS", messageBody);
 
-                ActivityMain.TV.append("Message from: "+smsMessage.getDisplayOriginatingAddress()+"\n");
-                ActivityMain.TV.append("Message body: "+messageBody+"\n");
+                SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-                String[] data = new String[3];
-                data[0] = "015156513730";
-                data[1] = smsMessage.getDisplayOriginatingAddress();
-                data[2] = messageBody;
+                ActivityMain.TV.append("\nNew Message:\n");
+                ActivityMain.TV.append("From: "+smsMessage.getDisplayOriginatingAddress()+"\n");
+                ActivityMain.TV.append("Body: "+messageBody+"\n");
+                ActivityMain.TV.append("To: "+sharedPrefs.getString("url", "NULL")+"\n");
+
+                String[] data = new String[4];
+                data[0] = sharedPrefs.getString("url", "NULL");
+                data[1] = sharedPrefs.getString("phone", "NULL");
+                data[2] = smsMessage.getDisplayOriginatingAddress();
+                data[3] = messageBody;
 
                 new TaskGET().execute(data);
             }
