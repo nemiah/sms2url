@@ -8,11 +8,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ScrollView;
 import android.widget.TextView;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 public class ActivityMain extends AppCompatActivity {
 
     public static TextView TV;
+    public static ScrollView SV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +27,15 @@ public class ActivityMain extends AppCompatActivity {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         TV = (TextView)findViewById(R.id.textView);
-        TV.append("Starting...\n");
-        TV.append("Phone number: "+sharedPrefs.getString("phone", "NULL")+"\n");
-        TV.append("Target URL:\n"+sharedPrefs.getString("url", "NULL")+"?device="+sharedPrefs.getString("phone", "NULL")+"&phone=remoteNumber&text=SMScontent\n");
+        SV = (ScrollView) findViewById(R.id.scrollView);
 
+
+        log("Starting...");
+        log(DateFormat.getDateTimeInstance().format(new Date()));
+        log("Phone number: "+sharedPrefs.getString("phone", "NULL"));
+        log("Target URL:\n"+sharedPrefs.getString("url", "NULL")+"?device="+sharedPrefs.getString("phone", "NULL")+"&phone=remoteNumber&text=SMScontent");
+
+        //log("TESt\nasdasd\nadas\n\n\n\nasdas\nTESt\nasdasd\nadas\n\n\n\nasdas\nTESt\nasdasd\nadas\n\n\n\nasdas\nTESt\nasdasd\nadas\n\n\n\nasdas\nTESt\nasdasd\nadas\n\n\n\nasdas");
 
         String[] data = new String[4];
         data[0] = sharedPrefs.getString("url", "NULL");
@@ -33,6 +44,17 @@ public class ActivityMain extends AppCompatActivity {
         data[3] = "Application started";
 
         new TaskGET().execute(data);
+    }
+
+    public static void log(String message){
+        TV.append(message+"\n");
+
+        SV.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                SV.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        }, 500);
     }
 
     @Override

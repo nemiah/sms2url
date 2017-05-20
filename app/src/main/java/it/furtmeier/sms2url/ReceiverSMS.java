@@ -1,13 +1,19 @@
 package it.furtmeier.sms2url;
 
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.Telephony;
 import android.telephony.SmsMessage;
 import android.util.Log;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 /**
  * Created by nemiah on 13.05.17.
@@ -17,26 +23,42 @@ public class ReceiverSMS extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (Telephony.Sms.Intents.SMS_RECEIVED_ACTION.equals(intent.getAction())) {
-            for (SmsMessage smsMessage : Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
-                String messageBody = smsMessage.getMessageBody();
-                Log.d("SMS", messageBody);
+        if (!Telephony.Sms.Intents.SMS_RECEIVED_ACTION.equals(intent.getAction()))
+            return;
 
-                SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        StringBuffer content = new StringBuffer();
 
-                ActivityMain.TV.append("\nNew Message:\n");
-                ActivityMain.TV.append("From: "+smsMessage.getDisplayOriginatingAddress()+"\n");
-                ActivityMain.TV.append("Body: "+messageBody+"\n");
-                ActivityMain.TV.append("To: "+sharedPrefs.getString("url", "NULL")+"\n");
+        String from = "";
 
-                String[] data = new String[4];
-                data[0] = sharedPrefs.getString("url", "NULL");
-                data[1] = sharedPrefs.getString("phone", "NULL");
-                data[2] = smsMessage.getDisplayOriginatingAddress();
-                data[3] = messageBody;
-
-                new TaskGET().execute(data);
-            }
+        for (SmsMessage smsMessage : Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
+            content.append(smsMessage.getDisplayMessageBody());
+            from = smsMessage.getDisplayOriginatingAddress();
         }
+
+
+        String messageBody = content.toString();
+        if(messageBody == "")
+            return;
+
+        Log.d("SMS", messageBody);
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+
+
+        ActivityMain.log("\nNew Message:");
+        ActivityMain.log(DateFormat.getDateTimeInstance().format(new Date()));
+        ActivityMain.log("From: "+from);
+        ActivityMain.log("Body: "+messageBody);
+        ActivityMain.log("To: "+sharedPrefs.getString("url", "NULL"));
+
+        String[] data = new String[4];
+        data[0] = sharedPrefs.getString("url", "NULL");
+        data[1] = sharedPrefs.getString("phone", "NULL");
+        data[2] = from;
+        data[3] = messageBody;
+
+        new TaskGET().execute(data);
+
     }
 }
