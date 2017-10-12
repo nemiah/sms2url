@@ -26,6 +26,7 @@ public class ReceiverSMS extends BroadcastReceiver {
         if (!Telephony.Sms.Intents.SMS_RECEIVED_ACTION.equals(intent.getAction()))
             return;
 
+
         StringBuffer content = new StringBuffer();
 
         String from = "";
@@ -44,6 +45,8 @@ public class ReceiverSMS extends BroadcastReceiver {
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
 
+        if(!ActivityMain.isInit)
+            ActivityMain.init(sharedPrefs);
 
 
         ActivityMain.log("\nNew Message:");
