@@ -19,5 +19,8 @@
         android:singleLine="true"
         android:title="@string/pref_url"/>
 
+    <Preference android:title="@string/pref_default"
+                android:key="setDefault"
+                android:summary="@string/pref_default_value"/>
 
 </PreferenceScreen>

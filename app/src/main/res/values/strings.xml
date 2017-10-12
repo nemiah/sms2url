@@ -7,5 +7,7 @@
     <string name="pref_url_value">http://www.myownserver.own/receiveSMS.php</string>
     <string name="pref_phone">Phone number</string>
     <string name="pref_phone_value">01234123456</string>
+    <string name="pref_default">Set as default SMS app</string>
+    <string name="pref_default_value">The app can run in the background</string>
 
 </resources>
